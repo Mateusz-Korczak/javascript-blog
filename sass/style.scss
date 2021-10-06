@@ -118,3 +118,14 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
+/* Clicked link style */
+
+ul.titles li a {
+  text-decoration: none;
+
+  &.active {
+    text-decoration: solid;
+
+  }
+}

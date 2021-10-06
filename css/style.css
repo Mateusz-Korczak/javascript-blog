@@ -112,4 +112,14 @@ body {
 .post-tags p {
   margin: 0 10px 0 0;
 }
+
+/* Clicked link style */
+ul.titles li a {
+  text-decoration: none;
+}
+
+ul.titles li a.active {
+  -webkit-text-decoration: solid;
+          text-decoration: solid;
+}
 /*# sourceMappingURL=style.css.map */
