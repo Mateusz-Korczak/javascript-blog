@@ -5,7 +5,8 @@
     optTitleSelector = ".post-title",
     optTitleListSelector = ".titles",
     optArticleTagsSelector = ".post-tags .list",
-    optArticleAuthorSelector = ".post-author";
+    optArticleAuthorSelector = ".post-author",
+    optTagsListSelector = "tags.list";
 
   const titleClickHandler = function (event) {
     event.preventDefault();
@@ -56,6 +57,8 @@
 
   const generateTags = function () {
     const articles = document.querySelectorAll(optArticleSelector);
+    /* [NEW] create a new variable allTags with an empty object */
+    let allTags = {};
 
     for (let article of articles) {
       const articleTagsWrapper = article.querySelector(optArticleTagsSelector);
@@ -64,13 +67,46 @@
       const articleTagsArray = articleTags.split(" ");
 
       for (let tag of articleTagsArray) {
-        const linkHtml =
+        const linkHTML =
           "<li><a href=#tag-" + tag + "><span>" + tag + "</span></a></li> ";
-        html = html + linkHtml;
+        html = html + linkHTML;
+        /* [NEW] check if this link is NOT already in allTags */
+        if (!allTags[tag]) {
+          /* [NEW] add tag to allTags object */
+          allTags[tag] = 1;
+        } else {
+          allTags[tag]++;
+        }
       }
 
       articleTagsWrapper.innerHTML = html;
     }
+    /* [NEW] find list of tags in right column */
+    const tagList = document.querySelector(".tags");
+    /* [NEW] create variable for all links HTML code */
+    let allTagsHTML = "";
+
+    /* [NEW] START LOOP: for each tag in allTags: */
+    for (let tag in allTags) {
+      /* [NEW] generate code of a link and add it to allTagsHTML */
+      //<li><a href="#">design</a> <span>(6)</span></li>
+      // allTagsHTML += tag + " (" + allTags[tag] + ") ";
+      allTagsHTML +=
+        '<li><a href="#tag-' +
+        tag +
+        '">' +
+        tag +
+        "</a> <span>" +
+        " (" +
+        allTags[tag] +
+        ") " +
+        "</span></li>";
+    }
+    /* [NEW] END LOOP: for each tag in allTags: */
+
+    /*[NEW] add HTML from allTagsHTML to tagList */
+    console.log(allTagsHTML);
+    tagList.innerHTML = allTagsHTML;
   };
 
   generateTags();
@@ -159,10 +195,8 @@
 
   const addClickListenersToTitleLinks = function () {
     const links = document.querySelectorAll(".titles li a");
-    console.log(links);
 
     for (let link of links) {
-      console.log(link);
       link.addEventListener("click", titleClickHandler);
     }
   };
