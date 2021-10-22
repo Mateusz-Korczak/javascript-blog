@@ -55,6 +55,10 @@
 
   generateTitleLinks();
 
+  const calculateTagsParams = function (tags) {
+    return tags;
+  };
+
   const generateTags = function () {
     const articles = document.querySelectorAll(optArticleSelector);
     /* [NEW] create a new variable allTags with an empty object */
@@ -83,6 +87,8 @@
     }
     /* [NEW] find list of tags in right column */
     const tagList = document.querySelector(".tags");
+    const tagsParams = calculateTagsParams(allTags);
+    console.log("tagsParams:", tagsParams);
     /* [NEW] create variable for all links HTML code */
     let allTagsHTML = "";
 
@@ -105,7 +111,6 @@
     /* [NEW] END LOOP: for each tag in allTags: */
 
     /*[NEW] add HTML from allTagsHTML to tagList */
-    console.log(allTagsHTML);
     tagList.innerHTML = allTagsHTML;
   };
 
