@@ -133,12 +133,14 @@ ul.titles li a {
   }
 }
 
+/* Cloud List sizing */
+
 .tags,
 .authors {
   $count: 1;
   @while $count < $max-cloud-classes {
     .tag-size-#{$count} {
-      font-size: (12 * $count) + px;
+      font-size: (10 * $count) + px;
       display: inline;
     }
 

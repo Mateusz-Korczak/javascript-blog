@@ -126,33 +126,34 @@ ul.titles li a.active {
           text-decoration: solid;
 }
 
+/* Cloud List sizing */
 .tags .tag-size-1,
 .authors .tag-size-1 {
-  font-size: 12px;
+  font-size: 10px;
   display: inline;
 }
 
 .tags .tag-size-2,
 .authors .tag-size-2 {
-  font-size: 24px;
+  font-size: 20px;
   display: inline;
 }
 
 .tags .tag-size-3,
 .authors .tag-size-3 {
-  font-size: 36px;
+  font-size: 30px;
   display: inline;
 }
 
 .tags .tag-size-4,
 .authors .tag-size-4 {
-  font-size: 48px;
+  font-size: 40px;
   display: inline;
 }
 
 .tags .tag-size-5,
 .authors .tag-size-5 {
-  font-size: 60px;
+  font-size: 50px;
   display: inline;
 }
 /*# sourceMappingURL=style.css.map */
