@@ -6,9 +6,10 @@
     optTitleListSelector = ".titles",
     optArticleTagsSelector = ".post-tags .list",
     optArticleAuthorSelector = ".post-author",
-    optTagsListSelector = "tags.list",
+    optTagsListSelector = ".tags",
     optCloudClassCount = 4,
-    optCloudClassPrefix = "tag-size-";
+    optCloudClassPrefix = "tag-size-",
+    optAuthorsListSelector = ".authors";
 
   const titleClickHandler = function (event) {
     event.preventDefault();
@@ -57,7 +58,7 @@
 
   generateTitleLinks();
 
-  const calculateTagsParams = function (tags) {
+  const calculateParams = function (tags) {
     const params = {
       max: 0,
       min: 1000,
@@ -65,14 +66,11 @@
     for (let tag in tags) {
       params.max = Math.max(tags[tag], params.max);
       params.min = Math.min(tags[tag], params.min);
-
-      // console.log(tag + " is used " + tags[tag] + " times");
     }
-    console.log(params);
     return params;
   };
 
-  const calculateTagClass = function (count, params) {
+  const calculateClass = function (count, params) {
     const classNumber = Math.floor(
       ((count - params.min) / (params.max - params.min)) * optCloudClassCount +
         1
@@ -106,9 +104,8 @@
       articleTagsWrapper.innerHTML = html;
     }
     /* [NEW] find list of tags in right column */
-    const tagList = document.querySelector(".tags");
-    const tagsParams = calculateTagsParams(allTags);
-    console.log("tagsParams:", tagsParams);
+    const tagList = document.querySelector(optTagsListSelector);
+    const tagsParams = calculateParams(allTags);
     /* [NEW] create variable for all links HTML code */
     let allTagsHTML = "";
 
@@ -117,7 +114,7 @@
       /* [NEW] generate code of a link and add it to allTagsHTML */
       //<li><a href="#">design</a> <span>(6)</span></li>
       // allTagsHTML += tag + " (" + allTags[tag] + ") ";
-      const tagLinkHTML = calculateTagClass(allTags[tag], tagsParams);
+      const tagLinkHTML = calculateClass(allTags[tag], tagsParams);
       allTagsHTML +=
         '<li><a href="#tag-' +
         tag +
@@ -165,27 +162,71 @@
 
   addClickListenersToTags();
 
+  // TUTAJ NIZEJ *** TUTAJ NIZEJ *** TUTAJ NIZEJ *** TUTAJ NIZEJ *** TUTAJ NIZEJ *** TUTAJ NIZEJ ***  \\
   const generateAuthors = function () {
     const articles = document.querySelectorAll(optArticleSelector);
+    /* [NEW] create a new variable allTags with an empty object */
+    let allAuthors = {};
 
+    /*
+    <li><a href="#"><a href="#"><span class="author-name">Kitty Toebean</span></a></li>
+    */
+    let articleAuthor = "";
     for (let article of articles) {
       let html = "";
       const articleAuthorAtt = article.getAttribute("data-author");
+      const articleAuthorDashRemoved = articleAuthorAtt.replace("-", " ");
       const linkHtml =
         "<li><a href=#author-" +
         articleAuthorAtt +
         "><span>by " +
-        articleAuthorAtt +
+        articleAuthorDashRemoved +
         "</span></a></li>";
+      /* [NEW] check if this link is NOT already in allTags */
+      if (!allAuthors[articleAuthorAtt]) {
+        /* [NEW] add tag to allTags object */
+        allAuthors[articleAuthorAtt] = 1;
+      } else {
+        allAuthors[articleAuthorAtt]++;
+      }
       html += linkHtml;
-      const articleAuthor = article.querySelector(optArticleAuthorSelector);
+      articleAuthor = article.querySelector(optArticleAuthorSelector);
       articleAuthor.innerHTML = html;
     }
+
+    /* [NEW] find list of tags in right column */
+    const AuthorsList = document.querySelector(optAuthorsListSelector);
+    const AuthorsParams = calculateParams(allAuthors);
+    /* [NEW] create variable for all links HTML code */
+    let allAuthorsHTML = "";
+
+    /* [NEW] START LOOP: for each tag in allTags: */
+    for (let Author in allAuthors) {
+      /* [NEW] generate code of a link and add it to allTagsHTML */
+      //<li><a href="#">design</a> <span>(6)</span></li>
+      // allTagsHTML += tag + " (" + allTags[tag] + ") ";
+      const AuthorLinkHTML = calculateClass(allAuthors[Author], AuthorsParams);
+      const AuthorDashRemoved = Author.replace("-", " ");
+      console.log(Author);
+      allAuthorsHTML +=
+        '<li><a href="#author-' +
+        Author +
+        '" class="' +
+        AuthorLinkHTML +
+        '" >' +
+        AuthorDashRemoved +
+        "</a></li>";
+    }
+    /* [NEW] END LOOP: for each tag in allTags: */
+
+    /*[NEW] add HTML from allTagsHTML to tagList */
+    AuthorsList.innerHTML = allAuthorsHTML;
   };
   generateAuthors();
 
   const authorClickHandler = function (event) {
     event.preventDefault();
+
     const href = this.getAttribute("href");
     const author = href.replace("#author-", "");
     const activeAuthorLinks = document.querySelectorAll(

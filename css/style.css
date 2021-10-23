@@ -126,27 +126,32 @@ ul.titles li a.active {
           text-decoration: solid;
 }
 
-.tags .tag-size-1 {
+.tags .tag-size-1,
+.authors .tag-size-1 {
   font-size: 12px;
   display: inline;
 }
 
-.tags .tag-size-2 {
+.tags .tag-size-2,
+.authors .tag-size-2 {
   font-size: 24px;
   display: inline;
 }
 
-.tags .tag-size-3 {
+.tags .tag-size-3,
+.authors .tag-size-3 {
   font-size: 36px;
   display: inline;
 }
 
-.tags .tag-size-4 {
+.tags .tag-size-4,
+.authors .tag-size-4 {
   font-size: 48px;
   display: inline;
 }
 
-.tags .tag-size-5 {
+.tags .tag-size-5,
+.authors .tag-size-5 {
   font-size: 60px;
   display: inline;
 }
